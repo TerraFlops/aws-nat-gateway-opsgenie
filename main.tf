@@ -1,10 +1,10 @@
 # Convert integration name into snake case
 locals {
   opsgenie_responding_teams = setunion(var.opsgenie_responding_teams, toset([var.opsgenie_owner_team]))
-
+  nat_gateway_identity = split("-", var.nat_gateway_id)[1]
   # Create alarm name based on the trigger condition (hopefully prevent duplicates)
   # (e.g. PaymentGatewayAverageApproximateNumberOfMessagesVisibleGreaterThanOrEqualToThreshold10000In5Periods)
-  alarm_name = var.alarm_name == null ? "${var.nat_gateway_id}Ec2${var.statistic}${var.metric_name}${var.comparison}${var.threshold}In${var.evaluation_periods}PeriodsOf${var.period}" : var.alarm_name
+  alarm_name = var.alarm_name == null ? "NatGateway${local.nat_gateway_identity}${var.statistic}${var.metric_name}${var.comparison}${var.threshold}In${var.evaluation_periods}PeriodsOf${var.period}" : var.alarm_name
 }
 
 # Retrieve the requested Opsgenie users
@@ -30,7 +30,7 @@ data "aws_caller_identity" "default" {
 
 # Create Opsgenie API integration
 resource "opsgenie_api_integration" "opsgenie_integration" {
-  name = "Terraform${data.aws_caller_identity.default.account_id}Ec2Integration${local.alarm_name}"
+  name = "Terraform${data.aws_caller_identity.default.account_id}NatGatewayIntegration${local.alarm_name}"
   type = "AmazonSns"
   owner_team_id = data.opsgenie_team.opsgenie_owner_team.id
   # Attach responders to the integration
