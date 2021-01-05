@@ -17,7 +17,7 @@ variable "alarm_name" {
 
 variable "metric_name" {
   type = string
-  description = "CloudWatch ECS metric for alarm (e.g. CPUUtilization)"
+  description = "CloudWatch NatGateway metric for alarm (e.g. BytesOutToSource)"
 }
 
 variable "treat_missing_data" {
