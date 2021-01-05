@@ -52,9 +52,9 @@ variable "threshold" {
 }
 
 variable "opsgenie_tags" {
-  type = map(string)
+  type = set(string)
   description = "Optional set of tags to add to the OpsGenie alert"
-  default = {}
+  default = []
 }
 
 variable "opsgenie_entity" {
