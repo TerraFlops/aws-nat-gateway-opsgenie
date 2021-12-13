@@ -49,7 +49,7 @@ resource "opsgenie_api_integration" "opsgenie_integration" {
     }
   }
   lifecycle {
-    ignore_changes [
+    ignore_changes = [
       responders
     ]
   }
@@ -111,7 +111,7 @@ resource "opsgenie_integration_action" "alarm" {
     }
   }
   lifecycle {
-    ignore_changes [
+    ignore_changes = [
       create[0].responders
     ]
   }
